@@ -121,6 +121,17 @@ function AnimatedSineWaveTrace() {
 
     const wavePath = generateSineWavePath();
 
+    // Generate sine wave segments for the plots array
+    const waveSegments = wavePath.length > 1
+        ? wavePath.slice(1).map((point, i) => ({
+              type: "segment" as const,
+              point1: wavePath[i] as [number, number],
+              point2: point as [number, number],
+              color: "#8E90F5",
+              weight: 2,
+          }))
+        : [];
+
     return (
         <div className="relative">
             <Cartesian2D
@@ -144,21 +155,9 @@ function AnimatedSineWaveTrace() {
                     { type: "point", x: 0, y: 0, color: "#64748b" },
                     // Sine wave trace point
                     ...(time > 0.1 ? [{ type: "point" as const, x: 1.5 + time * 0.8, y: pointY, color: "#8E90F5" }] : []),
+                    // Sine wave trace segments
+                    ...waveSegments,
                 ]}
-                dynamicPlots={() => {
-                    // Draw the sine wave trace as connected segments
-                    const segments: any[] = [];
-                    for (let i = 1; i < wavePath.length; i++) {
-                        segments.push({
-                            type: "segment",
-                            point1: wavePath[i - 1],
-                            point2: wavePath[i],
-                            color: "#8E90F5",
-                            weight: 2,
-                        });
-                    }
-                    return segments;
-                }}
             />
             {/* Play/Pause and Reset controls */}
             <div className="flex justify-center gap-3 mt-4">
