@@ -460,7 +460,7 @@ export const section1Blocks: ReactElement[] = [
         <div className="space-y-4">
             <Block id="unit-circle-controls" padding="sm">
                 <EditableParagraph id="para-unit-circle-controls" blockId="unit-circle-controls">
-                    Drag the red point around the circle and watch the amber arc grow or shrink. This arc shows the angle θ, measured from the positive x-axis. Notice how the angle is displayed in both degrees and radians. When the angle is{" "}
+                    Drag the <span style={{ color: "#ef4444", fontWeight: 600 }}>red point</span> around the circle and watch the amber arc grow or shrink. This arc shows the angle θ, measured from the positive x-axis. Notice how the angle is displayed in both degrees and radians. When the angle is{" "}
                     <InlineScrubbleNumber
                         varName="unitCircleAngle"
                         {...numberPropsFromDefinition(getVariableInfo("unitCircleAngle"))}
