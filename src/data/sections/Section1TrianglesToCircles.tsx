@@ -219,7 +219,9 @@ function AnimatedSineWaveTrace() {
 }
 
 /**
- * Interactive Unit Circle with draggable point for exploring sine/cosine
+ * Interactive Unit Circle with Angle Arc and Radian Measure
+ * Emphasizes the angle itself with a colored arc sector, showing both
+ * degree and radian measures. The arc length visually represents the radian value.
  */
 function InteractiveUnitCircle() {
     const angle = useVar("unitCircleAngle", 45) as number;
@@ -244,9 +246,95 @@ function InteractiveUnitCircle() {
     // Determine colors based on highlight state
     const sineColor = highlightId === "sine" ? "#8E90F5" : highlightId ? "rgba(142, 144, 245, 0.3)" : "#8E90F5";
     const cosineColor = highlightId === "cosine" ? "#62D0AD" : highlightId ? "rgba(98, 208, 173, 0.3)" : "#62D0AD";
+    const arcColor = "#F7B23B"; // Warm amber for the angle arc
+
+    // Generate arc path points for the angle sector
+    const generateArcPoints = (): [number, number][] => {
+        const points: [number, number][] = [];
+        const arcRadius = 0.35; // Inner arc radius for visibility
+        const steps = Math.max(2, Math.ceil(angle / 5)); // More points for smoother arc
+        for (let i = 0; i <= steps; i++) {
+            const t = (i / steps) * radians;
+            points.push([arcRadius * Math.cos(t), arcRadius * Math.sin(t)]);
+        }
+        return points;
+    };
+
+    const arcPoints = generateArcPoints();
+
+    // Format radian display
+    const formatRadians = (rad: number): string => {
+        const piMultiple = rad / Math.PI;
+        if (Math.abs(piMultiple - Math.round(piMultiple)) < 0.01) {
+            const rounded = Math.round(piMultiple);
+            if (rounded === 0) return "0";
+            if (rounded === 1) return "π";
+            if (rounded === -1) return "-π";
+            return `${rounded}π`;
+        }
+        // Show as fraction of π for common angles
+        const fractions = [
+            { num: 1, den: 6 }, { num: 1, den: 4 }, { num: 1, den: 3 }, { num: 1, den: 2 },
+            { num: 2, den: 3 }, { num: 3, den: 4 }, { num: 5, den: 6 },
+            { num: 5, den: 4 }, { num: 4, den: 3 }, { num: 3, den: 2 }, { num: 5, den: 3 }, { num: 7, den: 4 }, { num: 11, den: 6 },
+        ];
+        for (const f of fractions) {
+            if (Math.abs(piMultiple - f.num / f.den) < 0.02) {
+                return f.num === 1 ? `π/${f.den}` : `${f.num}π/${f.den}`;
+            }
+        }
+        return `${rad.toFixed(2)} rad`;
+    };
+
+    // Calculate label position for angle display (midway along arc)
+    const labelAngle = radians / 2;
+    const labelRadius = 0.55;
+    const labelX = labelRadius * Math.cos(labelAngle);
+    const labelY = labelRadius * Math.sin(labelAngle);
 
     return (
         <div className="relative">
+            {/* Custom SVG overlay for angle arc and labels */}
+            <svg
+                className="absolute inset-0 pointer-events-none"
+                viewBox="-1.5 -1.5 3 3"
+                style={{ width: "100%", height: "320px" }}
+                preserveAspectRatio="xMidYMid meet"
+            >
+                {/* Angle arc sector fill */}
+                {angle > 0 && (
+                    <path
+                        d={`M 0 0 L 0.35 0 A 0.35 0.35 0 ${angle > 180 ? 1 : 0} 1 ${0.35 * Math.cos(radians)} ${-0.35 * Math.sin(radians)} Z`}
+                        fill={arcColor}
+                        fillOpacity={0.2}
+                        transform="scale(1, -1)"
+                    />
+                )}
+                {/* Angle arc stroke */}
+                {arcPoints.length > 1 && (
+                    <path
+                        d={`M ${arcPoints[0][0]} ${-arcPoints[0][1]} ${arcPoints.slice(1).map(p => `L ${p[0]} ${-p[1]}`).join(" ")}`}
+                        stroke={arcColor}
+                        strokeWidth={0.03}
+                        fill="none"
+                    />
+                )}
+                {/* Angle label */}
+                {angle > 10 && (
+                    <text
+                        x={labelX}
+                        y={-labelY}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        fill={arcColor}
+                        fontSize="0.14"
+                        fontWeight="600"
+                    >
+                        θ
+                    </text>
+                )}
+            </svg>
+
             <Cartesian2D
                 height={320}
                 viewBox={{ x: [-1.5, 1.5], y: [-1.5, 1.5] }}
@@ -255,14 +343,18 @@ function InteractiveUnitCircle() {
                 plots={[
                     // Unit circle
                     { type: "circle", center: [0, 0], radius: 1, color: "#94a3b8", fillOpacity: 0.05 },
+                    // Reference line along positive x-axis
+                    { type: "segment", point1: [0, 0], point2: [1.2, 0], color: "#cbd5e1", weight: 1, style: "dashed" as const },
                     // Vertical line (sine)
                     { type: "segment", point1: [pointX, 0], point2: [pointX, pointY], color: sineColor, weight: 3, highlightId: "sine" },
                     // Horizontal line (cosine)
                     { type: "segment", point1: [0, 0], point2: [pointX, 0], color: cosineColor, weight: 3, highlightId: "cosine" },
-                    // Radius
+                    // Radius to point
                     { type: "segment", point1: [0, 0], point2: [pointX, pointY], color: "#64748b", weight: 2 },
-                    // Origin
+                    // Origin point
                     { type: "point", x: 0, y: 0, color: "#64748b" },
+                    // Point at (1, 0) to mark the start of the angle
+                    { type: "point", x: 1, y: 0, color: "#cbd5e1" },
                 ]}
                 movablePoints={[
                     {
@@ -279,12 +371,24 @@ function InteractiveUnitCircle() {
                     },
                 ]}
             />
+
+            {/* Angle measurements display */}
+            <div className="flex justify-center gap-6 mt-3 text-sm">
+                <span className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full" style={{ backgroundColor: arcColor }} />
+                    <span style={{ color: arcColor, fontWeight: 600 }}>{angle}° = {formatRadians(radians)}</span>
+                </span>
+                <span className="flex items-center gap-2 text-slate-500">
+                    Arc length = {radians.toFixed(2)} (radius × θ)
+                </span>
+            </div>
+
             <InteractionHintSequence
-                hintKey="unit-circle-drag"
+                hintKey="unit-circle-angle-arc"
                 steps={[
                     {
                         gesture: "drag-circular",
-                        label: "Drag the red point around the circle",
+                        label: "Drag the red point to change the angle",
                         position: { x: "70%", y: "30%" },
                         dragPath: { type: "arc", startAngle: 45, endAngle: 135, radius: 40 },
                     },
@@ -356,7 +460,13 @@ export const section1Blocks: ReactElement[] = [
         <div className="space-y-4">
             <Block id="unit-circle-controls" padding="sm">
                 <EditableParagraph id="para-unit-circle-controls" blockId="unit-circle-controls">
-                    Drag the red point around the circle and watch how the{" "}
+                    Drag the red point around the circle and watch the amber arc grow or shrink. This arc shows the angle θ, measured from the positive x-axis. Notice how the angle is displayed in both degrees and radians. When the angle is{" "}
+                    <InlineScrubbleNumber
+                        varName="unitCircleAngle"
+                        {...numberPropsFromDefinition(getVariableInfo("unitCircleAngle"))}
+                        formatValue={(v) => `${v}°`}
+                    />
+                    , the arc length equals the radian measure because the radius is exactly 1. The{" "}
                     <InlineLinkedHighlight
                         id="highlight-sine-value"
                         varName="unitCircleHighlight"
@@ -376,13 +486,7 @@ export const section1Blocks: ReactElement[] = [
                     >
                         horizontal line (cosine)
                     </InlineLinkedHighlight>{" "}
-                    change. When the angle is{" "}
-                    <InlineScrubbleNumber
-                        varName="unitCircleAngle"
-                        {...numberPropsFromDefinition(getVariableInfo("unitCircleAngle"))}
-                        formatValue={(v) => `${v}°`}
-                    />
-                    , you can see that <SineCosineValues />.
+                    show the coordinates: <SineCosineValues />.
                 </EditableParagraph>
             </Block>
             <Block id="unit-circle-formula" padding="sm">
