@@ -1,12 +1,12 @@
 /**
  * Variables Configuration
  * =======================
- * 
+ *
  * CENTRAL PLACE TO DEFINE ALL SHARED VARIABLES
- * 
+ *
  * This file defines all variables that can be shared across sections.
  * AI agents should read this file to understand what variables are available.
- * 
+ *
  * USAGE:
  * 1. Define variables here with their default values and metadata
  * 2. Use them in any section with: const x = useVar('variableName', defaultValue)
@@ -53,108 +53,287 @@ export interface VariableDefinition {
 
 /**
  * =====================================================
- * 🎯 DEFINE YOUR VARIABLES HERE
+ * 🎯 TRIGONOMETRY LESSON VARIABLES
  * =====================================================
- * 
- * SUPPORTED TYPES:
- * 
- * 1. NUMBER (slider):
- *    { defaultValue: 5, type: 'number', min: 0, max: 10, step: 1 }
- * 
- * 2. TEXT (free text):
- *    { defaultValue: 'Hello', type: 'text', placeholder: 'Enter text...' }
- * 
- * 3. SELECT (dropdown):
- *    { defaultValue: 'sine', type: 'select', options: ['sine', 'cosine', 'tangent'] }
- * 
- * 4. BOOLEAN (toggle):
- *    { defaultValue: true, type: 'boolean' }
- * 
- * 5. ARRAY (list of numbers):
- *    { defaultValue: [1, 2, 3], type: 'array' }
- * 
- * 6. OBJECT (complex data):
- *    { defaultValue: { x: 5, y: 10 }, type: 'object', schema: '{ x: number, y: number }' }
  */
 export const variableDefinitions: Record<string, VariableDefinition> = {
     // ========================================
-    // ADD YOUR VARIABLES HERE
+    // SECTION 1: From Triangles to Circles
     // ========================================
 
-    // Uncomment and modify these examples for your lesson:
-
-    /*
-    // ─────────────────────────────────────────
-    // NUMBER - Use with sliders
-    // ─────────────────────────────────────────
-    myValue: {
-        defaultValue: 5,
+    // Angle for unit circle exploration
+    unitCircleAngle: {
+        defaultValue: 45,
         type: 'number',
-        label: 'My Value',
-        description: 'A number that controls something',
-        unit: 'm',           // optional unit display
+        label: 'Angle',
+        description: 'Angle in degrees for the unit circle point',
+        unit: '°',
         min: 0,
-        max: 10,
-        step: 0.5,
+        max: 360,
+        step: 1,
+        color: '#8E90F5',
     },
 
-    // ─────────────────────────────────────────
-    // TEXT - Free text input
-    // ─────────────────────────────────────────
-    lessonTitle: {
-        defaultValue: 'My Lesson',
-        type: 'text',
-        label: 'Lesson Title',
-        description: 'The title of your lesson',
-        placeholder: 'Enter a title...',
+    // Animation time for the sine wave trace
+    animationTime: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Time',
+        description: 'Animation progress from 0 to 2π',
+        min: 0,
+        max: 6.28,
+        step: 0.01,
+        color: '#62D0AD',
     },
 
-    // ─────────────────────────────────────────
-    // SELECT - Dropdown with options
-    // ─────────────────────────────────────────
-    difficulty: {
-        defaultValue: 'medium',
-        type: 'select',
-        label: 'Difficulty',
-        description: 'The difficulty level of the lesson',
-        options: ['easy', 'medium', 'hard', 'expert'],
-    },
-
-    // ─────────────────────────────────────────
-    // BOOLEAN - Toggle switch
-    // ─────────────────────────────────────────
-    showHints: {
-        defaultValue: true,
+    // Animation playing state
+    animationPlaying: {
+        defaultValue: false,
         type: 'boolean',
-        label: 'Show Hints',
-        description: 'Toggle to show or hide hints',
+        label: 'Playing',
+        description: 'Whether the animation is currently playing',
     },
 
-    // ─────────────────────────────────────────
-    // ARRAY - List of numbers
-    // ─────────────────────────────────────────
-    dataPoints: {
-        defaultValue: [1, 4, 9, 16, 25],
-        type: 'array',
-        label: 'Data Points',
-        description: 'Y-values for plotting a graph',
+    // Linked highlight for unit circle parts
+    unitCircleHighlight: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Unit Circle Highlight',
+        description: 'Currently highlighted element in unit circle',
+        color: '#62D0AD',
+        bgColor: 'rgba(98, 208, 173, 0.15)',
     },
 
-    // ─────────────────────────────────────────
-    // OBJECT - Complex structured data
-    // ─────────────────────────────────────────
-    graphSettings: {
-        defaultValue: { 
-            xMin: -10, 
-            xMax: 10, 
-            showGrid: true 
-        },
-        type: 'object',
-        label: 'Graph Settings',
-        description: 'Configuration for the graph display',
-        schema: '{ xMin: number, xMax: number, showGrid: boolean }',
+    // Section 1 assessment answers
+    answerSineDefinition: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Sine Definition Answer',
+        description: 'Student answer for what sine represents',
+        placeholder: '???',
+        correctAnswer: 'y',
+        color: '#8E90F5',
     },
-    */
+
+    answerCosineDefinition: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Cosine Definition Answer',
+        description: 'Student answer for what cosine represents',
+        placeholder: '???',
+        correctAnswer: 'x',
+        color: '#62D0AD',
+    },
+
+    // ========================================
+    // SECTION 2: The Sine Wave Emerges
+    // ========================================
+
+    sineWaveAngle: {
+        defaultValue: 90,
+        type: 'number',
+        label: 'Angle',
+        description: 'Angle for exploring sine wave values',
+        unit: '°',
+        min: 0,
+        max: 720,
+        step: 15,
+        color: '#8E90F5',
+    },
+
+    answerSineMaxValue: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Sine Max Value',
+        description: 'Student answer for maximum sine value',
+        placeholder: '???',
+        correctAnswer: '1',
+        color: '#F7B23B',
+    },
+
+    answerSineZeroAngle: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Sine Zero Angle',
+        description: 'Student answer for when sine equals zero',
+        placeholder: '???',
+        correctAnswer: '180',
+        color: '#F7B23B',
+    },
+
+    // ========================================
+    // SECTION 3: Meet the Trig Family
+    // ========================================
+
+    trigFunctionType: {
+        defaultValue: 'sine',
+        type: 'select',
+        label: 'Function Type',
+        description: 'Which trig function to display',
+        options: ['sine', 'cosine', 'tangent'],
+        color: '#AC8BF9',
+    },
+
+    trigCompareAngle: {
+        defaultValue: 45,
+        type: 'number',
+        label: 'Comparison Angle',
+        description: 'Angle for comparing trig functions',
+        unit: '°',
+        min: 0,
+        max: 360,
+        step: 5,
+        color: '#62CCF9',
+    },
+
+    trigHighlight: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Trig Function Highlight',
+        description: 'Currently highlighted trig function',
+        color: '#AC8BF9',
+        bgColor: 'rgba(172, 139, 249, 0.15)',
+    },
+
+    answerTangentUndefined: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Tangent Undefined Angle',
+        description: 'Student answer for when tangent is undefined',
+        placeholder: '???',
+        correctAnswer: '90',
+        color: '#F4A89A',
+    },
+
+    // ========================================
+    // SECTION 4: Transforming Waves
+    // ========================================
+
+    waveAmplitude: {
+        defaultValue: 1,
+        type: 'number',
+        label: 'Amplitude',
+        description: 'Controls the height of the wave',
+        min: 0.5,
+        max: 3,
+        step: 0.1,
+        color: '#62D0AD',
+    },
+
+    wavePeriod: {
+        defaultValue: 1,
+        type: 'number',
+        label: 'Period Multiplier',
+        description: 'Controls how stretched or compressed the wave is',
+        min: 0.5,
+        max: 3,
+        step: 0.1,
+        color: '#8E90F5',
+    },
+
+    wavePhaseShift: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Phase Shift',
+        description: 'Horizontal shift of the wave',
+        unit: '°',
+        min: -180,
+        max: 180,
+        step: 15,
+        color: '#F7B23B',
+    },
+
+    waveVerticalShift: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Vertical Shift',
+        description: 'Vertical shift of the wave',
+        min: -2,
+        max: 2,
+        step: 0.1,
+        color: '#AC8BF9',
+    },
+
+    answerAmplitudeEffect: {
+        defaultValue: '',
+        type: 'select',
+        label: 'Amplitude Effect',
+        description: 'What happens when amplitude increases',
+        placeholder: '???',
+        correctAnswer: 'taller',
+        options: ['taller', 'wider', 'shifts right', 'shifts up'],
+        color: '#62D0AD',
+    },
+
+    answerPeriodEffect: {
+        defaultValue: '',
+        type: 'select',
+        label: 'Period Effect',
+        description: 'What happens when period multiplier increases',
+        placeholder: '???',
+        correctAnswer: 'compressed',
+        options: ['stretched', 'compressed', 'taller', 'shorter'],
+        color: '#8E90F5',
+    },
+
+    // ========================================
+    // SECTION 5: Trigonometry in Nature
+    // ========================================
+
+    soundFrequency: {
+        defaultValue: 440,
+        type: 'number',
+        label: 'Sound Frequency',
+        description: 'Frequency of sound wave in Hz',
+        unit: 'Hz',
+        min: 220,
+        max: 880,
+        step: 10,
+        color: '#62CCF9',
+    },
+
+    tideHour: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Hour of Day',
+        description: 'Time of day for tide visualization',
+        unit: 'h',
+        min: 0,
+        max: 24,
+        step: 1,
+        color: '#7DD3C0',
+    },
+
+    dayOfYear: {
+        defaultValue: 172,
+        type: 'number',
+        label: 'Day of Year',
+        description: 'Day number for daylight hours visualization',
+        min: 1,
+        max: 365,
+        step: 1,
+        color: '#F7B23B',
+    },
+
+    natureExampleType: {
+        defaultValue: 'sound',
+        type: 'select',
+        label: 'Nature Example',
+        description: 'Which natural phenomenon to explore',
+        options: ['sound', 'tides', 'daylight', 'pendulum'],
+        color: '#A8D5A2',
+    },
+
+    answerNatureSineWave: {
+        defaultValue: '',
+        type: 'select',
+        label: 'Natural Sine Wave',
+        description: 'Which phenomenon follows a sine pattern',
+        placeholder: '???',
+        correctAnswer: 'all',
+        options: ['sound only', 'tides only', 'daylight only', 'all'],
+        color: '#A8D5A2',
+    },
 };
 
 /**
