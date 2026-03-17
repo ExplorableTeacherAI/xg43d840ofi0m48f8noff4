@@ -80,16 +80,6 @@ function WaveTransformationExplorer() {
                     },
                 ]}
             />
-            <InteractionHintSequence
-                hintKey="wave-transformation"
-                steps={[
-                    {
-                        gesture: "hover",
-                        label: "Use the sliders below to transform the wave",
-                        position: { x: "50%", y: "50%" },
-                    },
-                ]}
-            />
             {/* Legend */}
             <div className="flex justify-center gap-6 mt-3 text-sm">
                 <span className="flex items-center gap-2">
