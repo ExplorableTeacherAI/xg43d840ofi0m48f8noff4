@@ -272,9 +272,9 @@ function PendulumVisualization() {
         let time = 0;
 
         const animate = () => {
-            time += 0.03;
+            time += 0.015;
             // Damped harmonic motion (sine wave!)
-            setAngle(30 * Math.sin(time * 2));
+            setAngle(30 * Math.sin(time * 1.5));
             animationId = requestAnimationFrame(animate);
         };
 
