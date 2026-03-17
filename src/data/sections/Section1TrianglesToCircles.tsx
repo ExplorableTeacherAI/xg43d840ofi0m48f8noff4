@@ -104,13 +104,13 @@ function AnimatedSineWaveTrace() {
     const pointX = Math.cos(time);
     const pointY = Math.sin(time);
 
-    // Generate the sine wave trace
+    // Generate the sine wave trace - starts at x=1 (edge of unit circle)
     const generateSineWavePath = (): [number, number][] => {
         const points: [number, number][] = [];
         const steps = 100;
         for (let i = 0; i <= steps; i++) {
             const t = (i / steps) * time;
-            const x = 1.5 + t * 0.8; // Offset to the right of the circle
+            const x = 1 + t * 0.8; // Start at x=1 (circle edge)
             const y = Math.sin(t);
             if (x <= 7) {
                 points.push([x, y]);
@@ -119,13 +119,13 @@ function AnimatedSineWaveTrace() {
         return points;
     };
 
-    // Generate the cosine wave trace
+    // Generate the cosine wave trace - starts at x=1 (edge of unit circle)
     const generateCosineWavePath = (): [number, number][] => {
         const points: [number, number][] = [];
         const steps = 100;
         for (let i = 0; i <= steps; i++) {
             const t = (i / steps) * time;
-            const x = 1.5 + t * 0.8; // Offset to the right of the circle
+            const x = 1 + t * 0.8; // Start at x=1 (circle edge)
             const y = Math.cos(t);
             if (x <= 7) {
                 points.push([x, y]);
@@ -169,9 +169,9 @@ function AnimatedSineWaveTrace() {
                     // Unit circle
                     { type: "circle", center: [0, 0], radius: 1, color: "#94a3b8", fillOpacity: 0.05 },
                     // Horizontal line from point to sine wave
-                    { type: "segment", point1: [pointX, pointY], point2: [1.5 + time * 0.8, pointY], color: "#8E90F5", style: "dashed", weight: 1 },
+                    { type: "segment", point1: [pointX, pointY], point2: [1 + time * 0.8, pointY], color: "#8E90F5", style: "dashed", weight: 1 },
                     // Horizontal line from point to cosine wave
-                    { type: "segment", point1: [pointX, pointY], point2: [1.5 + time * 0.8, pointX], color: "#62D0AD", style: "dashed", weight: 1 },
+                    { type: "segment", point1: [pointX, pointY], point2: [1 + time * 0.8, pointX], color: "#62D0AD", style: "dashed", weight: 1 },
                     // Vertical line (sine value)
                     { type: "segment", point1: [pointX, 0], point2: [pointX, pointY], color: "#8E90F5", weight: 3 },
                     // Horizontal line (cosine value)
@@ -183,9 +183,9 @@ function AnimatedSineWaveTrace() {
                     // Origin point
                     { type: "point", x: 0, y: 0, color: "#64748b" },
                     // Sine wave trace point
-                    ...(time > 0.1 ? [{ type: "point" as const, x: 1.5 + time * 0.8, y: pointY, color: "#8E90F5" }] : []),
+                    ...(time > 0.1 ? [{ type: "point" as const, x: 1 + time * 0.8, y: pointY, color: "#8E90F5" }] : []),
                     // Cosine wave trace point
-                    ...(time > 0.1 ? [{ type: "point" as const, x: 1.5 + time * 0.8, y: pointX, color: "#62D0AD" }] : []),
+                    ...(time > 0.1 ? [{ type: "point" as const, x: 1 + time * 0.8, y: pointX, color: "#62D0AD" }] : []),
                     // Sine wave trace segments
                     ...waveSegments,
                     // Cosine wave trace segments
