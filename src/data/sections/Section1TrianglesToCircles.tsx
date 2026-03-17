@@ -300,13 +300,12 @@ function InteractiveUnitCircle() {
                 style={{ width: "100%", height: "320px" }}
                 preserveAspectRatio="xMidYMid meet"
             >
-                {/* Angle arc sector fill */}
+                {/* Angle arc sector fill - SVG has y-axis pointing down, so we negate y values */}
                 {angle > 0 && (
                     <path
-                        d={`M 0 0 L 0.35 0 A 0.35 0.35 0 ${angle > 180 ? 1 : 0} 1 ${0.35 * Math.cos(radians)} ${-0.35 * Math.sin(radians)} Z`}
+                        d={`M 0 0 L 0.35 0 A 0.35 0.35 0 ${angle > 180 ? 1 : 0} 0 ${0.35 * Math.cos(radians)} ${-0.35 * Math.sin(radians)} Z`}
                         fill={arcColor}
                         fillOpacity={0.2}
-                        transform="scale(1, -1)"
                     />
                 )}
                 {/* Angle arc stroke */}
