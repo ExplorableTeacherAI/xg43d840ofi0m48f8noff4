@@ -284,27 +284,36 @@ function PendulumVisualization() {
 
     const radians = (angle * Math.PI) / 180;
     const pendulumLength = 80;
-    const bobX = 100 + Math.sin(radians) * pendulumLength;
-    const bobY = 20 + Math.cos(radians) * pendulumLength;
+    const pivotX = 100;
+    const pivotY = 20;
+    const bobX = pivotX + Math.sin(radians) * pendulumLength;
+    const bobY = pivotY + Math.cos(radians) * pendulumLength;
+
+    // Arc endpoints for ±30° swing range
+    const maxAngleRad = (30 * Math.PI) / 180;
+    const arcLeftX = pivotX - Math.sin(maxAngleRad) * pendulumLength;
+    const arcLeftY = pivotY + Math.cos(maxAngleRad) * pendulumLength;
+    const arcRightX = pivotX + Math.sin(maxAngleRad) * pendulumLength;
+    const arcRightY = pivotY + Math.cos(maxAngleRad) * pendulumLength;
 
     return (
         <div className="relative h-48 bg-gray-50 rounded-xl overflow-hidden">
             <svg width="200" height="180" className="mx-auto">
-                {/* Pivot point */}
-                <circle cx="100" cy="20" r="5" fill="#64748b" />
-                {/* String */}
-                <line x1="100" y1="20" x2={bobX} y2={bobY} stroke="#94a3b8" strokeWidth="2" />
-                {/* Bob */}
-                <circle cx={bobX} cy={bobY} r="15" fill="#8E90F5" />
                 {/* Arc showing swing range */}
                 <path
-                    d="M 60 100 A 80 80 0 0 1 140 100"
+                    d={`M ${arcLeftX} ${arcLeftY} A ${pendulumLength} ${pendulumLength} 0 0 1 ${arcRightX} ${arcRightY}`}
                     fill="none"
                     stroke="#94a3b8"
                     strokeWidth="1"
                     strokeDasharray="4,4"
                     opacity="0.5"
                 />
+                {/* Pivot point */}
+                <circle cx={pivotX} cy={pivotY} r="5" fill="#64748b" />
+                {/* String */}
+                <line x1={pivotX} y1={pivotY} x2={bobX} y2={bobY} stroke="#94a3b8" strokeWidth="2" />
+                {/* Bob */}
+                <circle cx={bobX} cy={bobY} r="15" fill="#8E90F5" />
             </svg>
             {/* Angle indicator */}
             <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-lg text-sm font-medium" style={{ backgroundColor: "rgba(142, 144, 245, 0.1)", color: "#8E90F5" }}>
