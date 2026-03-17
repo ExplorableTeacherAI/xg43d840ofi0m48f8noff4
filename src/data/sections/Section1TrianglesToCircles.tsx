@@ -70,7 +70,7 @@ function AnimatedSineWaveTrace() {
                 lastTimeRef.current = timestamp;
 
                 const currentTime = getVar("animationTime", 0) as number;
-                const newTime = currentTime + delta * 1.2;
+                const newTime = currentTime + delta * 0.5;
                 setVar("animationTime", newTime > 2 * Math.PI ? 0 : newTime);
 
                 animationRef.current = requestAnimationFrame(animate);
