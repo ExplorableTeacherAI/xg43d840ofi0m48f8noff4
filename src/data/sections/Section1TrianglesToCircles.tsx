@@ -28,7 +28,7 @@ import {
     clozePropsFromDefinition,
     linkedHighlightPropsFromDefinition,
 } from "../variables";
-import { useVar, useSetVar } from "@/stores";
+import { useVar, useSetVar, useVariableStore } from "@/stores";
 
 // ─── Reactive Components ─────────────────────────────────────────────────────
 
@@ -57,6 +57,7 @@ function AnimatedSineWaveTrace() {
     const time = useVar("animationTime", 0) as number;
     const isPlaying = useVar("animationPlaying", false) as boolean;
     const setVar = useSetVar();
+    const getVar = useVariableStore((state) => state.getVariable);
     const animationRef = useRef<number | null>(null);
     const lastTimeRef = useRef<number>(0);
 
@@ -68,10 +69,9 @@ function AnimatedSineWaveTrace() {
                 const delta = (timestamp - lastTimeRef.current) / 1000;
                 lastTimeRef.current = timestamp;
 
-                setVar("animationTime", (prev: number) => {
-                    const newTime = (prev as number) + delta * 1.2;
-                    return newTime > 2 * Math.PI ? 0 : newTime;
-                });
+                const currentTime = getVar("animationTime", 0) as number;
+                const newTime = currentTime + delta * 1.2;
+                setVar("animationTime", newTime > 2 * Math.PI ? 0 : newTime);
 
                 animationRef.current = requestAnimationFrame(animate);
             };
@@ -89,7 +89,7 @@ function AnimatedSineWaveTrace() {
                 cancelAnimationFrame(animationRef.current);
             }
         };
-    }, [isPlaying, setVar]);
+    }, [isPlaying, setVar, getVar]);
 
     const togglePlay = useCallback(() => {
         setVar("animationPlaying", !isPlaying);
