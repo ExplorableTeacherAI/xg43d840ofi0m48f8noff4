@@ -301,7 +301,7 @@ function PendulumVisualization() {
             <svg width="200" height="180" className="mx-auto">
                 {/* Arc showing swing range */}
                 <path
-                    d={`M ${arcLeftX} ${arcLeftY} A ${pendulumLength} ${pendulumLength} 0 0 1 ${arcRightX} ${arcRightY}`}
+                    d={`M ${arcLeftX} ${arcLeftY} A ${pendulumLength} ${pendulumLength} 0 0 0 ${arcRightX} ${arcRightY}`}
                     fill="none"
                     stroke="#94a3b8"
                     strokeWidth="1"
