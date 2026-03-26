@@ -522,7 +522,7 @@ export const section1Blocks: ReactElement[] = [
             </Block>
             <Block id="unit-circle-formula" padding="sm">
                 <FormulaBlock
-                    latex="\text{Point on circle: } (\cos\theta, \sin\theta)"
+                    latex="\text{Point on circle: } (\clr{cos}{\cos\theta}, \clr{sin}{\sin\theta})"
                     colorMap={{ cos: "#62D0AD", sin: "#8E90F5" }}
                 />
             </Block>
