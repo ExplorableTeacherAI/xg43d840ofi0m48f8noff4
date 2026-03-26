@@ -525,6 +525,7 @@ export const section1Blocks: ReactElement[] = [
                     latex="\text{Point on circle: } (\highlight{cosine}{\cos\theta}, \highlight{sine}{\sin\theta})"
                     colorMap={{ cosine: "#62D0AD", sine: "#8E90F5" }}
                     highlightVarName="unitCircleHighlight"
+                    highlightIdMap={{ cosine: "cosine", sine: "sine" }}
                 />
             </Block>
         </div>
