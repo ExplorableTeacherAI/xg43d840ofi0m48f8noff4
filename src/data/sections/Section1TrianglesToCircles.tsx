@@ -523,7 +523,7 @@ export const section1Blocks: ReactElement[] = [
             <Block id="unit-circle-formula" padding="sm">
                 <FormulaBlock
                     latex="\text{Point on circle: } (\highlight{cosine}{\cos\theta}, \highlight{sine}{\sin\theta})"
-                    colorMap={{ cosine: "#62D0AD", sine: "#8E90F5" }}
+                    colorMap={linkedHighlightPropsFromDefinition(getVariableInfo("unitCircleHighlight")).highlightColors}
                     highlightVarName="unitCircleHighlight"
                     highlightIdMap={{ cosine: "cosine", sine: "sine" }}
                 />

@@ -49,6 +49,8 @@ export interface VariableDefinition {
     bgColor?: string;
     /** Schema hint for object types (for AI agents) */
     schema?: string;
+    /** Color mapping for linkedHighlight type - maps highlightId to color */
+    highlightColors?: Record<string, string>;
 }
 
 /**
@@ -97,11 +99,13 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
     // Linked highlight for unit circle parts
     unitCircleHighlight: {
         defaultValue: '',
-        type: 'text',
+        type: 'linkedHighlight',
         label: 'Unit Circle Highlight',
-        description: 'Currently highlighted element in unit circle',
-        color: '#62D0AD',
-        bgColor: 'rgba(98, 208, 173, 0.15)',
+        description: 'Currently highlighted element in unit circle (sine or cosine)',
+        highlightColors: {
+            sine: '#8E90F5',
+            cosine: '#62D0AD',
+        },
     },
 
     // Section 1 assessment answers
@@ -462,7 +466,7 @@ export function spotColorPropsFromDefinition(def: VariableDefinition | undefined
 
 /**
  * Get linked-highlight props for InlineLinkedHighlight from a variable definition.
- * Extracts the `color` and `bgColor` fields.
+ * Extracts the `color`, `bgColor`, and `highlightColors` fields.
  *
  * @example
  * <InlineLinkedHighlight
@@ -476,10 +480,12 @@ export function spotColorPropsFromDefinition(def: VariableDefinition | undefined
 export function linkedHighlightPropsFromDefinition(def: VariableDefinition | undefined): {
     color?: string;
     bgColor?: string;
+    highlightColors?: Record<string, string>;
 } {
     return {
         ...(def?.color ? { color: def.color } : {}),
         ...(def?.bgColor ? { bgColor: def.bgColor } : {}),
+        ...(def?.highlightColors ? { highlightColors: def.highlightColors } : {}),
     };
 }
 
