@@ -23,6 +23,7 @@ import {
 } from "@/components/atoms";
 import { FormulaBlock } from "@/components/molecules";
 import { InteractionHintSequence } from "@/components/atoms/visual/InteractionHint";
+import { TriggeredHintOverlay } from "@/components/atoms/visual/TriggeredHintOverlay";
 import {
     getVariableInfo,
     numberPropsFromDefinition,
@@ -427,6 +428,8 @@ function InteractiveUnitCircle() {
                     },
                 ]}
             />
+            {/* Triggered hint overlay — activated by wrong-answer feedback */}
+            <TriggeredHintOverlay hintKey="feedback-sine-at-90" />
         </div>
     );
 }
