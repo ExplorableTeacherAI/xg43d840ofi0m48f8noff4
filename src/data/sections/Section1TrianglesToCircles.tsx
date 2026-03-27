@@ -483,7 +483,7 @@ export const section1Blocks: ReactElement[] = [
         <Block id="unit-circle-explanation" padding="sm">
             <EditableParagraph id="para-unit-circle-explanation" blockId="unit-circle-explanation">
                 A{" "}
-                <InlineTooltip id="tooltip-unit-circle" tooltip="A circle centered at the origin with radius exactly 1">
+                <InlineTooltip id="tooltip-unit-circle" tooltip="A circle centered at the origin with radius exactly 1" color="#F57C00" >
                     unit circle
                 </InlineTooltip>{" "}
                 is simply a circle with radius 1, centered at the origin. When we place a point on this circle and measure the angle from the positive x-axis,
