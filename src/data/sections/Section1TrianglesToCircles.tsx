@@ -282,7 +282,7 @@ function InteractiveUnitCircle() {
     // Determine colors based on highlight state
     const sineColor = highlightId === "sine" ? "#8E90F5" : highlightId ? "rgba(142, 144, 245, 0.3)" : "#8E90F5";
     const cosineColor = highlightId === "cosine" ? "#62D0AD" : highlightId ? "rgba(98, 208, 173, 0.3)" : "#62D0AD";
-    const arcColor = "#F7B23B"; // Warm amber for the angle arc
+    const arcColor = "#F59E0B"; // Warm amber for the angle arc
 
     // Generate arc path points for the angle sector
     const generateArcPoints = (): [number, number][] => {
