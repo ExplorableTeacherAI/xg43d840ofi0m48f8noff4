@@ -507,6 +507,7 @@ export const section1Blocks: ReactElement[] = [
                     max={360}
                     step={1}
                     color="#F59E0B"
+                    color="#F59E0B"
                     />
                     , the arc length equals the radian measure because the radius is exactly 1. The{" "}
                     <InlineLinkedHighlight
