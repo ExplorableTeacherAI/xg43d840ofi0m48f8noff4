@@ -558,9 +558,15 @@ export const section1Blocks: ReactElement[] = [
                         steps: [
                             {
                                 gesture: "drag-circular",
-                                label: "Drag the red point upward toward the top of the circle",
-                                position: { x: "70%", y: "30%" },
-                                dragPath: { type: "arc", startAngle: -45, endAngle: -90, radius: 35 },
+                                label: "Drag the red point upward — watch the sine value increase",
+                                position: { x: "75%", y: "35%" },
+                                dragPath: { type: "arc", startAngle: -45, endAngle: -60, radius: 35 },
+                            },
+                            {
+                                gesture: "drag-circular",
+                                label: "Keep dragging to the top — sine reaches its maximum of 1 at 90°!",
+                                position: { x: "55%", y: "18%" },
+                                dragPath: { type: "arc", startAngle: -60, endAngle: -90, radius: 35 },
                             },
                         ],
                         label: "Discover it yourself",
