@@ -18,6 +18,7 @@ import {
     InlineLinkedHighlight,
     InlineFeedback,
     InlineClozeInput,
+    InlineClozeChoice,
     Cartesian2D,
 } from "@/components/atoms";
 import { FormulaBlock } from "@/components/molecules";
@@ -26,6 +27,7 @@ import {
     getVariableInfo,
     numberPropsFromDefinition,
     clozePropsFromDefinition,
+    choicePropsFromDefinition,
     linkedHighlightPropsFromDefinition,
 } from "../variables";
 import { useVar, useSetVar, useVariableStore } from "@/stores";
@@ -542,6 +544,46 @@ export const section1Blocks: ReactElement[] = [
                 Notice how the sine value (the vertical distance from the x-axis) oscillates between -1 and 1 as the point moves around.
                 When the point is at the top of the circle (90°), sine equals 1. At the bottom (270°), sine equals -1.
                 This up-and-down motion is the heartbeat of the sine wave.
+            </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    // Quick check question about sine at 90°
+    <StackLayout key="layout-question-sine-at-90" maxWidth="xl">
+        <Block id="question-sine-at-90" padding="sm">
+            <EditableParagraph id="para-question-sine-at-90" blockId="question-sine-at-90">
+                Quick check: What is sin(90°)?{" "}
+                <InlineFeedback
+                    varName="answerSineAt90"
+                    correctValue="1"
+                    position="standalone"
+                    successMessage="Exactly! When the point is at the very top of the circle, its height is 1"
+                    failureMessage="Not quite."
+                    hint="Think about where the point is when the angle is 90°."
+                    visualizationHint={{
+                        blockId: "unit-circle-viz",
+                        hintKey: "feedback-sine-at-90",
+                        steps: [
+                            {
+                                gesture: "drag-circular",
+                                label: "Drag the red point upward toward the top of the circle",
+                                position: { x: "70%", y: "30%" },
+                                completionVar: "unitCircleAngle",
+                                completionValue: 90,
+                                completionTolerance: 10,
+                            },
+                        ],
+                        label: "Discover it yourself",
+                        resetVars: { unitCircleAngle: 45 },
+                    }}
+                >
+                    <InlineClozeChoice
+                        varName="answerSineAt90"
+                        correctAnswer="1"
+                        options={["0", "0.5", "1", "-1"]}
+                        {...choicePropsFromDefinition(getVariableInfo("answerSineAt90"))}
+                    />
+                </InlineFeedback>
             </EditableParagraph>
         </Block>
     </StackLayout>,

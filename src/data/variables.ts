@@ -129,6 +129,17 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         color: '#62D0AD',
     },
 
+    answerSineAt90: {
+        defaultValue: '',
+        type: 'select',
+        label: 'Sine at 90° Answer',
+        description: 'Student answer for sin(90°)',
+        placeholder: '???',
+        correctAnswer: '1',
+        options: ['0', '0.5', '1', '-1'],
+        color: '#8E90F5',
+    },
+
     // ========================================
     // SECTION 2: The Sine Wave Emerges
     // ========================================
