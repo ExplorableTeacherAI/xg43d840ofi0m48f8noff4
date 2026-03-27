@@ -502,6 +502,11 @@ export const section1Blocks: ReactElement[] = [
                         varName="unitCircleAngle"
                         {...numberPropsFromDefinition(getVariableInfo("unitCircleAngle"))}
                         formatValue={(v) => `${v}°`}
+                    defaultValue={45}
+                    min={0}
+                    max={360}
+                    step={1}
+                    color="#F59E0B"
                     />
                     , the arc length equals the radian measure because the radius is exactly 1. The{" "}
                     <InlineLinkedHighlight
