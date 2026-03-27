@@ -73,7 +73,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         min: 0,
         max: 360,
         step: 1,
-        color: '#8E90F5',
+        color: '#F59E0B',
     },
 
     // Animation time for the sine wave trace
