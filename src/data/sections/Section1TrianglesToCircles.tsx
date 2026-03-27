@@ -537,17 +537,6 @@ export const section1Blocks: ReactElement[] = [
         </Block>
     </SplitLayout>,
 
-    // Key insight
-    <StackLayout key="layout-unit-circle-insight" maxWidth="xl">
-        <Block id="unit-circle-insight" padding="sm">
-            <EditableParagraph id="para-unit-circle-insight" blockId="unit-circle-insight">
-                Notice how the sine value (the vertical distance from the x-axis) oscillates between -1 and 1 as the point moves around.
-                When the point is at the top of the circle (90°), sine equals 1. At the bottom (270°), sine equals -1.
-                This up-and-down motion is the heartbeat of the sine wave.
-            </EditableParagraph>
-        </Block>
-    </StackLayout>,
-
     // Quick check question about sine at 90°
     <StackLayout key="layout-question-sine-at-90" maxWidth="xl">
         <Block id="question-sine-at-90" padding="sm">
@@ -584,6 +573,17 @@ export const section1Blocks: ReactElement[] = [
                         {...choicePropsFromDefinition(getVariableInfo("answerSineAt90"))}
                     />
                 </InlineFeedback>
+            </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    // Key insight
+    <StackLayout key="layout-unit-circle-insight" maxWidth="xl">
+        <Block id="unit-circle-insight" padding="sm">
+            <EditableParagraph id="para-unit-circle-insight" blockId="unit-circle-insight">
+                Notice how the sine value (the vertical distance from the x-axis) oscillates between -1 and 1 as the point moves around.
+                When the point is at the top of the circle (90°), sine equals 1. At the bottom (270°), sine equals -1.
+                This up-and-down motion is the heartbeat of the sine wave.
             </EditableParagraph>
         </Block>
     </StackLayout>,
